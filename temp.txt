@@ -1,0 +1,16 @@
+## Probando NPM
+
+**Procedimiento para probar la libreria antes de publicar**
+
+    node
+    Welcome to Node.js v13.11.0.
+    Type ".help" for more information.
+    > taggeo = require('./index')
+    { Analytics: [Function: LiverpoolAnalytics] }
+    > taggeo =  new taggeo.Analytics();
+    LiverpoolAnalytics {}
+    > taggeo.healthCheck();
+    '3/16/2020, 7:34:59 PM'
+
+**Para publicar**
+npm adduser
