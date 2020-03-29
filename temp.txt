@@ -14,3 +14,25 @@
 
 **Para publicar**
 npm adduser
+
+npm publish --access public
+
+
+http://localhost:2021/cdn/jsons/applications.json
+
+EsLint:
+
+#Instalando
+npm install eslint -g
+
+# instalando localmente
+npm install eslint --save-dev
+
+#Para configurar
+npm run lint -- --init
+
+
+#Help Links
+https://medium.com/@maheshkumawat_83392/node-js-design-patterns-singleton-pattern-series-1-1e0ab71e3edf
+https://derickbailey.com/2016/03/09/creating-a-true-singleton-in-node-js-with-es6-symbols/
+https://medium.com/@dmnsgn/singleton-pattern-in-es6-d2d021d150ae
