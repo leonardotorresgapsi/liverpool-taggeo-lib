@@ -10,29 +10,30 @@ const TagManager = require('react-gtm-module');
 
 module.exports = class LogicGoogleAnalytics {
   constructor(key) {
+    this.isInitTgm = false;
     this.key = key;
     this.tagManagerArgs = {};
+    this.tagManagerArgs.gtmId = this.key;
     this.init();
   }
 
   init() {
-    this.tagManagerArgs.gtmId = this.key;
-    this.isInitTgm = false;
     if (!this.isInitTgm) {
-      console.log('LogicGoogleAnalytics::init-1');
+      console.log('LogicGoogleAnalytics::init is false');
       if (typeof window !== 'undefined' && window) {
-        console.log('LogicGoogleAnalytics::init-2');
+        console.log('LogicGoogleAnalytics::init window');
         TagManager.initialize(this.tagManagerArgs);
         this.isInitTgm = true;
       }
+    } else {
+      console.log('LogicGoogleAnalytics::init is true');
     }
   }
 
   // eslint-disable-next-line class-methods-use-this
   execute(datatAnalytics) {
-    console.log('LogicGoogleAnalytics::execute-1');
+    console.log('LogicGoogleAnalytics::execute:{}',datatAnalytics);
     if (typeof window !== 'undefined' && window) {
-      console.log('LogicGoogleAnalytics::execute-2');
       const vTagManagerArgs = {};
       vTagManagerArgs.dataLayerName = 'dataLayer';
       vTagManagerArgs.dataLayer = datatAnalytics;

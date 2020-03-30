@@ -7,7 +7,8 @@
     @observations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 // const https = require('https');
-const http = require('http');
+// const http = require('http');
+const fetch = require('node-fetch');
 
 const TAGGING_URL = 'http://localhost:2021/getDataByApplication?';
 const TAGGING_KEY = Symbol.for('Liverpool.Tagging.equivalences');
@@ -17,34 +18,25 @@ module.exports = class ConfigurationAnalytics {
   constructor(appKeyId) {
     this.appKeyId = appKeyId;
     console.log('constructor ConfigurationAnalytics');
-    this.configure();
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  configure() {
+  // eslint-disable-next-line class-methods-use-this,consistent-return
+  async configure() {
     const hasTagging = (globalSymbols.indexOf(TAGGING_KEY) > -1);
     if (!hasTagging) {
       console.log('constructor ConfigurationAnalytics hasTagging');
       const url = `${TAGGING_URL}appKeyId=${this.appKeyId}`;
-      http.get(url, (res) => {
-        let body = '';
-        res.on('data', (chunk) => {
-          body += chunk;
-        });
-        res.on('end', () => {
-          try {
-            global[TAGGING_KEY] = JSON.parse(body);
-            console.log('ASSIGN-OK');
-          } catch (error) {
-            console.error('Error in assign to object {}', error.message);
-          }
-        });
-      }).on('error', (error) => {
-        console.error('Error request failed {}', error.message);
-      });
+      console.log('BEFORE:{}', url);
+      const response = await fetch(url);
+      const dataJson = await response.json();
+      console.log('r:{}', dataJson);
+      global[TAGGING_KEY] = dataJson;
+      console.log('ConfigurationAnalytics get data for Application OK!');
+      return dataJson;
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
   getGoogleKey() {
     let result = '';
     const equivalences = global[TAGGING_KEY];
@@ -61,5 +53,33 @@ module.exports = class ConfigurationAnalytics {
     }
     console.log('getGoogleKey:{}', result);
     return result;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  getApplication() {
+    console.log('ConfigurationAnalytics::getApplication');
+    const equivalences = global[TAGGING_KEY];
+    return equivalences.applications[0];
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  getEvent(eventName) {
+    console.log('ConfigurationAnalytics::getEvent');
+    const equivalences = global[TAGGING_KEY];
+    return equivalences.events.filter((it) => it.event === eventName);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  getLayer(eventId) {
+    console.log('ConfigurationAnalytics::getLayer');
+    const equivalences = global[TAGGING_KEY];
+    return equivalences.layers.filter((it) => it.eventId === eventId);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  getAttributes(eventId) {
+    console.log('ConfigurationAnalytics::getAttributes');
+    const equivalences = global[TAGGING_KEY];
+    return equivalences.attributes.filter((it) => it.eventId === eventId);
   }
 };
