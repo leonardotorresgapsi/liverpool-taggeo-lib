@@ -11,6 +11,6 @@ module.exports = class LogicAdobeAnalytics {
   execute(datatAnalytics) {
     console.log('LogicAdobeAnalytics::execute:{}', datatAnalytics);
     window.digitalData.event = window.digitalData.event || [];
-    window.digitalData.event.push(datatAnalytics);
+    // window.digitalData.event.push(datatAnalytics);
   }
 };

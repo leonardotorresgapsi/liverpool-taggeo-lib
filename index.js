@@ -6,10 +6,10 @@
     @desc
     @observations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-var Analytics = require('./LiverpoolAnalytics');
+const Analytics = require('./LiverpoolAnalytics');
 
 const taggeo = {
-    Analytics
+  Analytics,
 };
 
 module.exports = taggeo;
