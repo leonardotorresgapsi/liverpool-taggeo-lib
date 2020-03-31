@@ -9,10 +9,9 @@
  * @description: library for Liverpool Analytics Tagging
  * @since-version: 1.0
  */
-const Analytics = require('./LiverpoolAnalytics');
-
-const MainTagging = {
-  Analytics,
+module.exports = class Logger {
+  // eslint-disable-next-line class-methods-use-this
+  log(message) {
+    console.log('log::{}', message);
+  }
 };
-
-module.exports = MainTagging;

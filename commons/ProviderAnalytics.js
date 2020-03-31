@@ -1,13 +1,16 @@
-/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    @team         GAPSI
-    @project      Tagging Analytics
-    @author       leonardo torres ochoa
-    @dateTime     29/03/2020 00:14
-    @desc
-    @observations
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-const LogicGoogleAnalytics = require('../providers/LogicGoogleAnalytics');
-const LogicAdobeAnalytics = require('../providers/LogicAdobeAnalytics');
+/**
+ * Copyright (c) 2020 - Liverpool. All rights reserved
+ * Grupo de Asesores Profesionales en Servicios de Integración {GAPSI} - CDMX - 2020
+ */
+
+/**
+ * @author: Leonardo Ivan Torres Ochoa [30/03/2020]
+ * @updated: ---
+ * @description: library for Liverpool Analytics Tagging
+ * @since-version: 1.0
+ */
+const Google = require('../drivers/Google');
+const Adobe = require('../drivers/Adobe');
 const ConfigurationsAnalytics = require('./ConfigurationAnalytics');
 
 // eslint-disable-next-line no-extend-native
@@ -30,13 +33,13 @@ module.exports = class ProviderAnalytics {
 
   init(v) {
     console.log('waiting for init:{}', v);
-    this.logicGoogle = new LogicGoogleAnalytics(this.configurations.getGoogleKey());
-    this.logicAdobe = new LogicAdobeAnalytics();
+    this.google = new Google(this.configurations.getGoogleKey());
+    this.adobe = new Adobe();
     this.dataApplication = this.configurations.getApplication();
   }
 
-  publish(dataAnalytics) {
-    let liverpoolLayer = dataAnalytics;
+  publish(dataLayer) {
+    let liverpoolLayer = dataLayer;
     let stringJson = '';
 
     // Get data Event
@@ -44,8 +47,8 @@ module.exports = class ProviderAnalytics {
     console.log('publish::dataEvent:{}', dataEvent);
 
     // Get data for Layer
-    const dataLayer = this.configurations.getLayer(dataEvent[0].id);
-    console.log('publish::dataLayer:{}', dataLayer);
+    const dataTemplate = this.configurations.getLayer(dataEvent[0].id);
+    console.log('publish::dataTemplate:{}', dataTemplate);
 
     /** Step 1: Iterate over each provider from this application */
     for (let index = 0; index < this.dataApplication.providers.length; index += 1) {
@@ -53,15 +56,15 @@ module.exports = class ProviderAnalytics {
       if (this.dataApplication.providers[index].enabled) {
         stringJson = '';
 
-        /** Step 3: set name event y dataLayer for object liverpoolLayer */
+        /** Step 3: set name event y dataTemplate for object liverpoolLayer */
         switch (this.dataApplication.providers[index].name) {
           case 'Google':
             liverpoolLayer.event = dataEvent[0].providers[0].google;
-            stringJson = dataLayer[0].providers[0].data;
+            stringJson = dataTemplate[0].providers[0].data;
             break;
           default:
             liverpoolLayer.event = dataEvent[0].providers[1].adobe;
-            stringJson = dataLayer[0].providers[1].data;
+            stringJson = dataTemplate[0].providers[1].data;
             break;
         }
 
@@ -75,8 +78,8 @@ module.exports = class ProviderAnalytics {
 
         /** Step 6: send to dataLayer */
         switch (this.dataApplication.providers[index].name) {
-          case 'Google': this.logicGoogle.execute(jsonToSend); break;
-          default: this.logicAdobe.execute(jsonToSend);
+          case 'Google': this.google.execute(jsonToSend); break;
+          default: this.adobe.execute(jsonToSend);
         }
       }
     }

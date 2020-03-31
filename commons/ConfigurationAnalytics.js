@@ -1,13 +1,14 @@
-/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    @team         GAPSI
-    @project      Tagging Analytics
-    @author       leonardo torres ochoa
-    @dateTime     29/03/2020 00:14
-    @desc
-    @observations
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-// const https = require('https');
-// const http = require('http');
+/**
+ * Copyright (c) 2020 - Liverpool. All rights reserved
+ * Grupo de Asesores Profesionales en Servicios de Integración {GAPSI} - CDMX - 2020
+ */
+
+/**
+ * @author: Leonardo Ivan Torres Ochoa [30/03/2020]
+ * @updated: ---
+ * @description: library for Liverpool Analytics Tagging
+ * @since-version: 1.0
+ */
 const fetch = require('node-fetch');
 
 const TAGGING_URL = 'http://localhost:2021/getDataByApplication?';

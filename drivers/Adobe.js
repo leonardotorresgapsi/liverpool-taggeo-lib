@@ -9,10 +9,11 @@
  * @description: library for Liverpool Analytics Tagging
  * @since-version: 1.0
  */
-const Analytics = require('./LiverpoolAnalytics');
-
-const MainTagging = {
-  Analytics,
+module.exports = class Adobe {
+  // eslint-disable-next-line class-methods-use-this
+  execute(dataLayer) {
+    console.log('Adobe::execute:{}', dataLayer);
+    window.digitalData.event = window.digitalData.event || [];
+    window.digitalData.event.push(dataLayer);
+  }
 };
-
-module.exports = MainTagging;

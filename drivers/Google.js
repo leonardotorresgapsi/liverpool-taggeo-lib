@@ -1,14 +1,17 @@
-/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    @team         GAPSI
-    @project      Tagging Analytics
-    @author       leonardo torres ochoa
-    @dateTime     29/03/2020 00:14
-    @desc
-    @observations
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/**
+ * Copyright (c) 2020 - Liverpool. All rights reserved
+ * Grupo de Asesores Profesionales en Servicios de Integración {GAPSI} - CDMX - 2020
+ */
+
+/**
+ * @author: Leonardo Ivan Torres Ochoa [30/03/2020]
+ * @updated: ---
+ * @description: library for Liverpool Analytics Tagging
+ * @since-version: 1.0
+ */
 const TagManager = require('react-gtm-module');
 
-module.exports = class LogicGoogleAnalytics {
+module.exports = class Google {
   constructor(key) {
     this.isInitTgm = false;
     this.key = key;
@@ -19,24 +22,24 @@ module.exports = class LogicGoogleAnalytics {
 
   init() {
     if (!this.isInitTgm) {
-      console.log('LogicGoogleAnalytics::init is false');
+      console.log('Google::init is false');
       if (typeof window !== 'undefined' && window) {
         console.log('LogicGoogleAnalytics::init window');
         TagManager.initialize(this.tagManagerArgs);
         this.isInitTgm = true;
       }
     } else {
-      console.log('LogicGoogleAnalytics::init is true');
+      console.log('Google::init is true');
     }
   }
 
   // eslint-disable-next-line class-methods-use-this
-  execute(datatAnalytics) {
-    console.log('LogicGoogleAnalytics::execute:{}',datatAnalytics);
+  execute(dataLayer) {
+    console.log('Google::execute:{}', dataLayer);
     if (typeof window !== 'undefined' && window) {
       const vTagManagerArgs = {};
       vTagManagerArgs.dataLayerName = 'dataLayer';
-      vTagManagerArgs.dataLayer = datatAnalytics;
+      vTagManagerArgs.dataLayer = dataLayer;
 
       TagManager.dataLayer(vTagManagerArgs);
     }

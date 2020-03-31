@@ -15,10 +15,6 @@ module.exports = class LiverpoolAnalytics {
     this.providers = new ProviderAnalytics(this.appKeyId);
   }
 
-  init() {
-    this.providers.init();
-  }
-
   publish(dataAnalytics) {
     this.providers.publish(dataAnalytics);
   }
