@@ -11,7 +11,7 @@
  */
 const fetch = require('node-fetch');
 
-const TAGGING_URL = 'http://localhost:2021/getDataByApplication?';
+const TAGGING_URL = 'http://localhost:8090/getDataByApplication?';
 const TAGGING_KEY = Symbol.for('Liverpool.Tagging.equivalences');
 const globalSymbols = Object.getOwnPropertySymbols(global);
 
