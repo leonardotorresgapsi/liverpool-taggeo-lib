@@ -12,8 +12,16 @@
 module.exports = class Adobe {
   // eslint-disable-next-line class-methods-use-this
   execute(dataLayer) {
-    console.log('Adobe::execute:{}', dataLayer);
+    console.log('Adobe[1]::execute:{}', dataLayer);
+    // TODO:1Mar2020 window.digitalData.event = window.digitalData.event || [];
+    // TODO:1Mar2020 window.digitalData.event.push(dataLayer);
+    // TODO:1Mar2020 se implemento mejora de envio (correcion de error trim())
+    window.digitalData = window.digitalData || {};
+    const eventCustom = dataLayer.event;
+    // eslint-disable-next-line no-param-reassign
+    delete dataLayer.event;
+    Object.assign(window.digitalData, dataLayer);
     window.digitalData.event = window.digitalData.event || [];
-    window.digitalData.event.push(dataLayer);
+    window.digitalData.event.push(eventCustom);
   }
 };
