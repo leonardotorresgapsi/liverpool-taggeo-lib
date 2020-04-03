@@ -5,7 +5,7 @@
 
 /**
  * @author: Leonardo Ivan Torres Ochoa [30/03/2020]
- * @updated: ---
+ * @updated: 03/04/2020
  * @description: library for Liverpool Analytics Tagging
  * @since-version: 1.0
  */
@@ -22,20 +22,20 @@ module.exports = class Google {
 
   init() {
     if (!this.isInitTgm) {
-      console.log('Google::init is false');
+      console.log('(LIV)Google::init is false');
       if (typeof window !== 'undefined' && window) {
-        console.log('LogicGoogleAnalytics::init window');
+        console.log('(LIV)Google::init is found window');
         TagManager.initialize(this.tagManagerArgs);
         this.isInitTgm = true;
       }
     } else {
-      console.log('Google::init is true');
+      console.log('(LIV)Google::init is true');
     }
   }
 
   // eslint-disable-next-line class-methods-use-this
   execute(dataLayer) {
-    console.log('Google::execute:{}', dataLayer);
+    console.log('(LIV)Google::execute:{}', dataLayer);
     if (typeof window !== 'undefined' && window) {
       const vTagManagerArgs = {};
       vTagManagerArgs.dataLayerName = 'dataLayer';
@@ -44,4 +44,5 @@ module.exports = class Google {
       TagManager.dataLayer(vTagManagerArgs);
     }
   }
+
 };

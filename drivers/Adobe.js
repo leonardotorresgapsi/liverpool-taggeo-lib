@@ -12,7 +12,7 @@
 module.exports = class Adobe {
   // eslint-disable-next-line class-methods-use-this
   execute(dataLayer) {
-    console.log('Adobe[1]::execute:{}', dataLayer);
+    console.log('(LIV)Adobe::execute:{}', dataLayer);
     // TODO:1Mar2020 window.digitalData.event = window.digitalData.event || [];
     // TODO:1Mar2020 window.digitalData.event.push(dataLayer);
     // TODO:1Mar2020 se implemento mejora de envio (correcion de error trim())

@@ -5,7 +5,7 @@
 
 /**
  * @author: Leonardo Ivan Torres Ochoa [30/03/2020]
- * @updated: ---
+ * @updated: 03/04/2020
  * @description: library for Liverpool Analytics Tagging
  * @since-version: 1.0
  */
@@ -13,26 +13,24 @@ const fetch = require('node-fetch');
 
 const TAGGING_URL = 'http://localhost:8090/getDataByApplication?';
 const TAGGING_KEY = Symbol.for('Liverpool.Tagging.equivalences');
-const globalSymbols = Object.getOwnPropertySymbols(global);
 
 module.exports = class ConfigurationAnalytics {
   constructor(appKeyId) {
     this.appKeyId = appKeyId;
-    console.log('constructor ConfigurationAnalytics');
+    console.log('(LIV)ConfigurationAnalytics::constructor');
   }
 
   // eslint-disable-next-line class-methods-use-this,consistent-return
   async configure() {
-    const hasTagging = (globalSymbols.indexOf(TAGGING_KEY) > -1);
-    if (!hasTagging) {
-      console.log('constructor ConfigurationAnalytics hasTagging');
+    console.log('(LIV)ConfigurationAnalytics::configure 1 {}', global[TAGGING_KEY]);
+    if (global[TAGGING_KEY] === undefined) {
+      console.log('(LIV)ConfigurationAnalytics::configure hasTagging');
       const url = `${TAGGING_URL}appKeyId=${this.appKeyId}`;
-      console.log('BEFORE:{}', url);
       const response = await fetch(url);
       const dataJson = await response.json();
-      console.log('r:{}', dataJson);
+      console.log('(LIV)ConfigurationAnalytics::configure DataEquivalences:{}', dataJson);
       global[TAGGING_KEY] = dataJson;
-      console.log('ConfigurationAnalytics get data for Application OK!');
+      console.log('(LIV)ConfigurationAnalytics::configure DataEquivalences in CACHE!');
       return dataJson;
     }
   }
@@ -52,34 +50,34 @@ module.exports = class ConfigurationAnalytics {
         }
       }
     }
-    console.log('getGoogleKey:{}', result);
+    console.log('(LIV)ConfigurationAnalytics::getGoogleKey:{}', result);
     return result;
   }
 
   // eslint-disable-next-line class-methods-use-this
   getApplication() {
-    console.log('ConfigurationAnalytics::getApplication');
+    console.log('(LIV)ConfigurationAnalytics::getApplication');
     const equivalences = global[TAGGING_KEY];
     return equivalences.applications[0];
   }
 
   // eslint-disable-next-line class-methods-use-this
   getEvent(eventName) {
-    console.log('ConfigurationAnalytics::getEvent');
+    console.log('(LIV)ConfigurationAnalytics::getEvent');
     const equivalences = global[TAGGING_KEY];
     return equivalences.events.filter((it) => it.event === eventName);
   }
 
   // eslint-disable-next-line class-methods-use-this
   getLayer(eventId) {
-    console.log('ConfigurationAnalytics::getLayer');
+    console.log('(LIV)ConfigurationAnalytics::getLayer');
     const equivalences = global[TAGGING_KEY];
     return equivalences.layers.filter((it) => it.eventId === eventId);
   }
 
   // eslint-disable-next-line class-methods-use-this
   getAttributes(eventId) {
-    console.log('ConfigurationAnalytics::getAttributes');
+    console.log('(LIV)ConfigurationAnalytics::getAttributes');
     const equivalences = global[TAGGING_KEY];
     return equivalences.attributes.filter((it) => it.eventId === eventId);
   }
