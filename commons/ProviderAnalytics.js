@@ -27,7 +27,6 @@ String.prototype.interpolate = function (params) {
 module.exports = class ProviderAnalytics {
   constructor(appKeyId) {
     this.appKeyId = appKeyId;
-    //console.log('(LIV)ProviderAnalytics::constructor');
     this.configurations = new ConfigurationsAnalytics(this.appKeyId);
     this.configurations.configure().then((v) => {
       this.init(v);
@@ -35,12 +34,11 @@ module.exports = class ProviderAnalytics {
   }
 
   init(v) {
-    //console.log('(LIV)ProviderAnalytics::init waiting for async call:{}', v);
     this.google = new Google(this.configurations.getGoogleKey());
     this.adobe = new Adobe();
     this.logger = new Logger(this.configurations.getApplication().debugMode, "ProviderAnalytics");
     this.dataApplication = this.configurations.getApplication();
-    this.logger.info('(LIV)ProviderAnalytics::init waiting for async call:{}', v);
+    this.logger.info('init waiting for async call:{}', v);
   }
 
   publish(dataLayer) {
@@ -48,26 +46,22 @@ module.exports = class ProviderAnalytics {
     let stringJson = '';
 
     if (global[TAGGING_KEY] === undefined) {
-      //console.log('(LIV)ProviderAnalytics::publish !Error, not exist data equivalences');
-      this.logger.info('(LIV)ProviderAnalytics::publish !Error, not exist data equivalences');
+      this.logger.info('publish !Error, not exist data equivalences');
       return;
     }
     // Get data Event
     const dataEvent = this.configurations.getEvent(liverpoolLayer.event);
-    //console.log('(LIV)ProviderAnalytics::publish dataEvent:{}', dataEvent);
-    this.logger.info('(LIV)ProviderAnalytics::publish dataEvent:{}', dataEvent);
+    this.logger.info('publish dataEvent:{}', dataEvent);
 
     // Si no se encuentra el evento en la tabla se envia a google solamente como dataLayer
     if (dataEvent.length === 0) {
-      //console.log('(LIV)ProviderAnalytics::publish send dataLayer for default to Google!');
-      this.logger.info('(LIV)ProviderAnalytics::publish send dataLayer for default to Google!');
+      this.logger.info('publish send dataLayer for default to Google!');
       this.google.execute(liverpoolLayer);
       return;
     }
     // Get data for Layer
     const dataTemplate = this.configurations.getLayer(dataEvent[0].id);
-    //console.log('(LIV)ProviderAnalytics::publish dataTemplate:{}', dataTemplate);
-    this.logger.info(('(LIV)ProviderAnalytics::publish dataTemplate:{}', dataTemplate));
+    this.logger.info(('publish dataTemplate:{}', dataTemplate));
 
     /** Step 1: Iterate over each provider from this application */
     for (let index = 0; index < this.dataApplication.providers.length; index += 1) {
@@ -90,8 +84,7 @@ module.exports = class ProviderAnalytics {
         /** Step 4: interpolation de template y object liverpoolLayer  */
         const result = stringJson.interpolate({ liverpoolLayer });
         const jsonToSend = JSON.parse(result);
-        //console.log('(LIV)ProviderAnalytics::publish valid JSON: {}', jsonToSend);
-        this.logger.info('(LIV)ProviderAnalytics::publish valid JSON: {}', jsonToSend);
+        this.logger.info('publish valid JSON: {}', jsonToSend);
 
         /** Step 5: convert layer from Config applications > Attributes */
         // const dataAttributes = this.configurations.getAttributes(dataEvent.id);
