@@ -22,7 +22,7 @@ module.exports = class ConfigurationAnalytics {
 
   // eslint-disable-next-line class-methods-use-this,consistent-return
   async configure() {
-    console.log('(LIV)ConfigurationAnalytics::configure 1 {}', global[TAGGING_KEY]);
+    console.log('(LIV)ConfigurationAnalytics::configure {}', global[TAGGING_KEY]);
     if (global[TAGGING_KEY] === undefined) {
       console.log('(LIV)ConfigurationAnalytics::configure hasTagging');
       const url = `${TAGGING_URL}appKeyId=${this.appKeyId}`;
@@ -56,28 +56,24 @@ module.exports = class ConfigurationAnalytics {
 
   // eslint-disable-next-line class-methods-use-this
   getApplication() {
-    console.log('(LIV)ConfigurationAnalytics::getApplication');
     const equivalences = global[TAGGING_KEY];
     return equivalences.applications[0];
   }
 
   // eslint-disable-next-line class-methods-use-this
   getEvent(eventName) {
-    console.log('(LIV)ConfigurationAnalytics::getEvent');
     const equivalences = global[TAGGING_KEY];
     return equivalences.events.filter((it) => it.event === eventName);
   }
 
   // eslint-disable-next-line class-methods-use-this
   getLayer(eventId) {
-    console.log('(LIV)ConfigurationAnalytics::getLayer');
     const equivalences = global[TAGGING_KEY];
     return equivalences.layers.filter((it) => it.eventId === eventId);
   }
 
   // eslint-disable-next-line class-methods-use-this
   getAttributes(eventId) {
-    console.log('(LIV)ConfigurationAnalytics::getAttributes');
     const equivalences = global[TAGGING_KEY];
     return equivalences.attributes.filter((it) => it.eventId === eventId);
   }

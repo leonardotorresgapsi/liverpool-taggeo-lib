@@ -1,6 +1,6 @@
 {
   "name": "liverpool-taggeo-lib",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Tagging library for google and adobe analytics.",
   "main": "index.js",
   "scripts": {

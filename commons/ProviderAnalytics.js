@@ -36,7 +36,7 @@ module.exports = class ProviderAnalytics {
   init(v) {
     this.google = new Google(this.configurations.getGoogleKey());
     this.adobe = new Adobe();
-    this.logger = new Logger(this.configurations.getApplication().debugMode, "ProviderAnalytics");
+    this.logger = new Logger(this.configurations.getApplication().debugMode, 'ProviderAnalytics');
     this.dataApplication = this.configurations.getApplication();
     this.logger.info('init waiting for async call:{}', v);
   }
@@ -84,7 +84,7 @@ module.exports = class ProviderAnalytics {
         /** Step 4: interpolation de template y object liverpoolLayer  */
         const result = stringJson.interpolate({ liverpoolLayer });
         const jsonToSend = JSON.parse(result);
-        this.logger.info('publish valid JSON: {}', jsonToSend);
+        this.logger.info(`${this.dataApplication.providers[index].name} publish valid JSON: {}`, jsonToSend);
 
         /** Step 5: convert layer from Config applications > Attributes */
         // const dataAttributes = this.configurations.getAttributes(dataEvent.id);
