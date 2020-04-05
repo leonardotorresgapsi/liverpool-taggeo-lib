@@ -5,7 +5,7 @@
 
 /**
  * @author: Leonardo Ivan Torres Ochoa [30/03/2020]
- * @updated: 03/04/2020
+ * @updated: Oscar Longino [05/04/2020}
  * @description: library for Liverpool Analytics Tagging
  * @since-version: 1.0
  */
@@ -13,26 +13,52 @@ const fetch = require('node-fetch');
 
 const TAGGING_URL = 'http://localhost:8090/getDataByApplication?';
 const TAGGING_KEY = Symbol.for('Liverpool.Tagging.equivalences');
+const LIVERPOOL_TAGGING_CONFIG = 'LIVERPOOL_TAGGING_CONFIG';
+const AnalyticsStorage = require('./AnalyticsStorage.');
 
 module.exports = class ConfigurationAnalytics {
   constructor(appKeyId) {
     this.appKeyId = appKeyId;
+    this.analyticsStorage = new AnalyticsStorage();
     console.log('(LIV)ConfigurationAnalytics::constructor');
   }
 
   // eslint-disable-next-line class-methods-use-this,consistent-return
   async configure() {
-    console.log('(LIV)ConfigurationAnalytics::configure {}', global[TAGGING_KEY]);
-    if (global[TAGGING_KEY] === undefined) {
-      console.log('(LIV)ConfigurationAnalytics::configure hasTagging');
-      const url = `${TAGGING_URL}appKeyId=${this.appKeyId}`;
-      const response = await fetch(url);
-      const dataJson = await response.json();
-      console.log('(LIV)ConfigurationAnalytics::configure DataEquivalences:{}', dataJson);
+    //this.analyticsStorage.remove("config");
+    const config = this.analyticsStorage.get(LIVERPOOL_TAGGING_CONFIG);
+    if(config == null ){
+      return this.loadConfiguration();
+    }else{
+      console.log('(LIV)ConfigurationAnalytics::configure loaded from LocalStorage');
+     
+      /**Step 1: It load config from LocalStorage and obtain the updatedAt value for verificated the date update*/
+      let dataJson = JSON.parse(config);
+      let now = new Date(); 
+      let updateAt = dataJson.applications[0].updatedAt;
+      let timeToGetConfig = dataJson.applications[0].timeToGetConfig;
+      
+      /**Step 2: It Check if property updateAt is empty, then generate the next date for reaload the configuration*/
+      if(updateAt == ''){
+        updateAt = this.getDateToNextReload(updateAt, timeToGetConfig);
+        dataJson.applications[0].updatedAt = updateAt;
+        this.analyticsStorage.put(LIVERPOOL_TAGGING_CONFIG, JSON.stringify(dataJson));
+      }
+
+      console.log('(LIV)ConfigurationAnalytics::configure now: ', now);
+      console.log('(LIV)ConfigurationAnalytics::configure updated at: ', updateAt);
+
+       /**Step 3: It convert the value of updateAt to date and check if the date today is greater than updateAt*/
+      updateAt = new Date(updateAt);
+      if(now > updateAt){
+        updateAt = this.getDateToNextReload(updateAt, timeToGetConfig);
+        return this.loadConfiguration(updateAt);
+      }
+
+      /**Step Final: return de dataJson */
       global[TAGGING_KEY] = dataJson;
-      console.log('(LIV)ConfigurationAnalytics::configure DataEquivalences in CACHE!');
       return dataJson;
-    }
+    }   
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -77,4 +103,29 @@ module.exports = class ConfigurationAnalytics {
     const equivalences = global[TAGGING_KEY];
     return equivalences.attributes.filter((it) => it.eventId === eventId);
   }
+
+  // eslint-disable-next-line class-methods-use-this
+  getDateToNextReload(updateAt, timeMilliseconds){
+    updateAt = Date.now();
+    updateAt += timeMilliseconds;
+    updateAt = new Date(updateAt); 
+    return updateAt;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  async loadConfiguration(updateAt){
+    console.log('(LIV)ConfigurationAnalytics::configure load from: ', TAGGING_URL);
+    console.log('(LIV)ConfigurationAnalytics::configure hasTagging');
+    const url = `${TAGGING_URL}appKeyId=${this.appKeyId}`;
+    const response = await fetch(url);
+    const dataJson = await response.json();
+    if(updateAt != null && updateAt != undefined){
+      dataJson.applications[0].updatedAt = updateAt;
+    }
+    this.analyticsStorage.put(LIVERPOOL_TAGGING_CONFIG, JSON.stringify(dataJson));
+    console.log('(LIV)ConfigurationAnalytics::configure loaded put to LocalStorage');
+    global[TAGGING_KEY] = dataJson;
+    return dataJson;
+  }
+
 };

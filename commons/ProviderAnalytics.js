@@ -5,7 +5,7 @@
 
 /**
  * @author: Leonardo Ivan Torres Ochoa [30/03/2020]
- * @updated: Oscar Longino [04/04/2020]
+ * @updated: Oscar Longino [05/04/2020]
  * @description: library for Liverpool Analytics Tagging
  * @since-version: 1.0
  */
@@ -38,7 +38,7 @@ module.exports = class ProviderAnalytics {
     this.adobe = new Adobe();
     this.logger = new Logger(this.configurations.getApplication().debugMode, 'ProviderAnalytics');
     this.dataApplication = this.configurations.getApplication();
-    this.logger.info('init waiting for async call:{}', v);
+    this.logger.info('init waiting for async call:{}');
   }
 
   publish(dataLayer) {

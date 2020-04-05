@@ -17,6 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "node-fetch": "^2.6.0",
+    "node-localstorage": "^2.1.5",
     "react-gtm-module": "^2.0.8"
   },
   "devDependencies": {
