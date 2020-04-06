@@ -14,7 +14,7 @@ const fetch = require('node-fetch');
 const TAGGING_URL = 'http://localhost:8090/getDataByApplication?';
 const TAGGING_KEY = Symbol.for('Liverpool.Tagging.equivalences');
 const LIVERPOOL_TAGGING_CONFIG = 'LIVERPOOL_TAGGING_CONFIG';
-const AnalyticsStorage = require('./AnalyticsStorage.');
+const AnalyticsStorage = require('./AnalyticsStorage');
 
 module.exports = class ConfigurationAnalytics {
   constructor(appKeyId) {
