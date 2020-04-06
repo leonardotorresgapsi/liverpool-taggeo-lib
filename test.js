@@ -48,7 +48,7 @@ setTimeout(
   () => {
     analyticsTagging.publish(liverpoolLayer);
   }, 2000,
-);*/
+); */
 
 
 console.log(' ');

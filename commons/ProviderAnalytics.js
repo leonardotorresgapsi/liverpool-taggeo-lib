@@ -28,12 +28,13 @@ module.exports = class ProviderAnalytics {
   constructor(appKeyId) {
     this.appKeyId = appKeyId;
     this.configurations = new ConfigurationsAnalytics(this.appKeyId);
-    this.configurations.configure().then((v) => {
-      this.init(v);
-    });
+    this.init('');
+    // this.configurations.configure().then((v) => {
+    //   this.init(v);
+    // });
   }
 
-  init(v) {
+  init() {
     this.google = new Google(this.configurations.getGoogleKey());
     this.adobe = new Adobe();
     this.logger = new Logger(this.configurations.getApplication().debugMode, 'ProviderAnalytics');
@@ -51,7 +52,6 @@ module.exports = class ProviderAnalytics {
     }
     // Get data Event
     const dataEvent = this.configurations.getEvent(liverpoolLayer.event);
-    console.log('ssss:{}', dataEvent);
     this.logger.info('publish dataEvent:{}', dataEvent);
 
     // Si no se encuentra el evento en la tabla se envia a google solamente como dataLayer
