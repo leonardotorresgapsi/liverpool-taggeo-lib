@@ -51,6 +51,7 @@ module.exports = class ProviderAnalytics {
     }
     // Get data Event
     const dataEvent = this.configurations.getEvent(liverpoolLayer.event);
+    console.log('ssss:{}', dataEvent);
     this.logger.info('publish dataEvent:{}', dataEvent);
 
     // Si no se encuentra el evento en la tabla se envia a google solamente como dataLayer

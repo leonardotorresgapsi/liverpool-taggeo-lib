@@ -1,6 +1,6 @@
 {
   "name": "liverpool-taggeo-lib",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Tagging library for google and adobe analytics.",
   "main": "index.js",
   "scripts": {
@@ -16,8 +16,8 @@
   "author": "GAPSI",
   "license": "ISC",
   "dependencies": {
+    "local-storage": "^2.0.0",
     "node-fetch": "^2.6.0",
-    "node-localstorage": "^2.1.5",
     "react-gtm-module": "^2.0.8"
   },
   "devDependencies": {

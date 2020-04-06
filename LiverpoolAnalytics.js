@@ -13,9 +13,8 @@ const ProviderAnalytics = require('./commons/ProviderAnalytics');
 
 module.exports = class LiverpoolAnalytics {
   constructor(appKeyId) {
-    console.log('(LIV)LiverpoolAnalytics::constructor');
-    this.appKeyId = appKeyId;
-    this.providers = new ProviderAnalytics(this.appKeyId);
+    console.log('(LIV)LiverpoolAnalytics::constructor ', appKeyId);
+    this.providers = new ProviderAnalytics(appKeyId);
   }
 
   publish(dataAnalytics) {
