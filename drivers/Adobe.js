@@ -11,8 +11,20 @@
  */
 module.exports = class Adobe {
   // eslint-disable-next-line class-methods-use-this
-  execute(dataLayer) {
-    window.digitalData.event = window.digitalData.event || [];
-    window.digitalData.event.push(dataLayer);
+  execute(dataLayer, eventNameSource) {
+    if (eventNameSource === 'pageView') {
+      window.digitalData = window.digitalData || {};
+      window.digitalData.page = dataLayer;
+      window.digitalData.event = window.digitalData.event || [];
+      window.digitalData.event.push({
+        eventName: 'Custom Page View',
+        eventAction: 'customPageView',
+        type: 'userInteraction',
+        timeStamp: new Date(),
+      });
+    } else {
+      window.digitalData.event = window.digitalData.event || [];
+      window.digitalData.event.push(dataLayer);
+    }
   }
 };

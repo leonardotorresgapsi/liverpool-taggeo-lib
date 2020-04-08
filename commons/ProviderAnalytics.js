@@ -45,6 +45,7 @@ module.exports = class ProviderAnalytics {
   publish(dataLayer) {
     let liverpoolLayer = dataLayer;
     let stringJson = '';
+    const eventNameSource = dataLayer.event;
 
     if (global[TAGGING_KEY] === undefined) {
       this.logger.info('publish !Error, not exist data equivalences');
@@ -93,7 +94,7 @@ module.exports = class ProviderAnalytics {
         /** Step 6: send to dataLayer */
         switch (this.dataApplication.providers[index].name) {
           case 'Google': this.google.execute(jsonToSend); break;
-          default: this.adobe.execute(jsonToSend);
+          default: this.adobe.execute(jsonToSend, eventNameSource);
         }
       }
     }
