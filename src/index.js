@@ -9,10 +9,10 @@
  * @description: library for Liverpool Analytics Tagging
  * @since-version: 1.0
  */
+
 const Analytics = require('./LiverpoolAnalytics');
 
 const MainTagging = {
   Analytics,
 };
-
 module.exports = MainTagging;

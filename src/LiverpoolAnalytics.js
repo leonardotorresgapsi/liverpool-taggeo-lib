@@ -10,6 +10,7 @@
  * @since-version: 1.0
  */
 const ProviderAnalytics = require('./commons/ProviderAnalytics');
+const ProviderGoogleGA = require('./drivers/GoogleGACustom');
 
 module.exports = class LiverpoolAnalytics {
   constructor(appKeyId) {
@@ -19,6 +20,20 @@ module.exports = class LiverpoolAnalytics {
 
   publish(dataAnalytics) {
     this.providers.publish(dataAnalytics);
+  }
+
+  initGA() {
+    ProviderGoogleGA.init(this.providers.getGoogleKey());
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  setPageGA(context) {
+    ProviderGoogleGA.setPageView(context);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  setEventGA(dataLayer) {
+    ProviderGoogleGA.setEvent(dataLayer);
   }
 
   // eslint-disable-next-line class-methods-use-this
