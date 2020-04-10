@@ -18,22 +18,13 @@ module.exports = class LiverpoolAnalytics {
     this.providers = new ProviderAnalytics(appKeyId);
   }
 
-  publish(dataAnalytics) {
-    this.providers.publish(dataAnalytics);
-  }
-
-  initGA() {
-    ProviderGoogleGA.init(this.providers.getGoogleKey());
+  publish(dataAnalytics, isEvent) {
+    this.providers.publish(dataAnalytics, isEvent);
   }
 
   // eslint-disable-next-line class-methods-use-this
-  setPageGA(context) {
+  setPageView(context) {
     ProviderGoogleGA.setPageView(context);
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  setEventGA(dataLayer) {
-    ProviderGoogleGA.setEvent(dataLayer);
   }
 
   // eslint-disable-next-line class-methods-use-this

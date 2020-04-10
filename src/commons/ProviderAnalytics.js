@@ -14,7 +14,7 @@ const Google = require('../drivers/Google');
 const Adobe = require('../drivers/Adobe');
 const Logger = require('./Logger');
 const ConfigurationsAnalytics = require('./ConfigurationAnalytics');
-
+const ProviderGoogleGA = require('../drivers/GoogleGACustom');
 
 // eslint-disable-next-line no-extend-native
 String.prototype.interpolate = function (params) {
@@ -40,13 +40,20 @@ module.exports = class ProviderAnalytics {
     this.logger = new Logger(this.configurations.getApplication().debugMode, 'ProviderAnalytics');
     this.dataApplication = this.configurations.getApplication();
     this.logger.info('init waiting for async call:{}');
+    ProviderGoogleGA.init(this.configurations.getGoogleKey());
   }
 
   getGoogleKey() {
     return this.configurations.getGoogleKey();
   }
 
-  publish(dataLayer) {
+  publish(dataLayer, isEvent) {
+    if (typeof isEvent !== 'undefined') {
+      if (isEvent) {
+        ProviderGoogleGA.setEvent(dataLayer);
+      }
+      return;
+    }
     let liverpoolLayer = dataLayer;
     let stringJson = '';
     const eventNameSource = dataLayer.event;
