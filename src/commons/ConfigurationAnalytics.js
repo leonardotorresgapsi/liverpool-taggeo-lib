@@ -9,7 +9,7 @@
  * @description: library for Liverpool Analytics Tagging
  * @since-version: 1.0
  */
-const fetch = require('node-fetch');
+// const fetch = require('node-fetch');
 const retus = require('retus');
 
 const TAGGING_URL = 'http://localhost:8090/getDataByApplication?';
@@ -60,22 +60,20 @@ module.exports = class ConfigurationAnalytics {
     return dataJson;
   }
 
-  // eslint-disable-next-line class-methods-use-this,consistent-return
-  async configure() {
-    // this.analyticsStorage.remove("config");
+  /* async configure() {
     const config = this.analyticsStorage.get(LIVERPOOL_TAGGING_CONFIG);
     if (config == null) {
       return this.loadConfiguration();
     }
     console.log('(LIV)ConfigurationAnalytics::configure loaded from LocalStorage');
 
-    /** Step 1: It load config from LocalStorage and obtain the updatedAt value for verificated the date update */
+    // Step 1: It load config from LocalStorage and obtain the updatedAt value for verificated the date update
     const dataJson = JSON.parse(config);
     const now = new Date();
     let updateAt = dataJson.applications[0].updatedAt;
     const { timeToGetConfig } = dataJson.applications[0];
 
-    /** Step 2: It Check if property updateAt is empty, then generate the next date for reaload the configuration */
+    // Step 2: It Check if property updateAt is empty, then generate the next date for reaload the configuration
     if (updateAt === '') {
       updateAt = this.getDateToNextReload(updateAt, timeToGetConfig);
       dataJson.applications[0].updatedAt = updateAt;
@@ -85,17 +83,17 @@ module.exports = class ConfigurationAnalytics {
     console.log('(LIV)ConfigurationAnalytics::configure now: ', now);
     console.log('(LIV)ConfigurationAnalytics::configure updated at: ', updateAt);
 
-    /** Step 3: It convert the value of updateAt to date and check if the date today is greater than updateAt */
+    // Step 3: It convert the value of updateAt to date and check if the date today is greater than updateAt
     updateAt = new Date(updateAt);
     if (now > updateAt) {
       updateAt = this.getDateToNextReload(updateAt, timeToGetConfig);
       return this.loadConfiguration(updateAt);
     }
 
-    /** Step Final: return de dataJson */
+    // Step Final: return de dataJson
     global[TAGGING_KEY] = dataJson;
     return dataJson;
-  }
+  } */
 
   // eslint-disable-next-line class-methods-use-this
   getGoogleKey() {
@@ -163,8 +161,7 @@ module.exports = class ConfigurationAnalytics {
     return updateAtParam;
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  async loadConfiguration(updateAt) {
+  /*  async loadConfiguration(updateAt) {
     console.log('(LIV)ConfigurationAnalytics::configure load from: ', TAGGING_URL);
     console.log('(LIV)ConfigurationAnalytics::configure hasTagging');
     const url = `${TAGGING_URL}appKeyId=${this.appKeyId}`;
@@ -177,7 +174,7 @@ module.exports = class ConfigurationAnalytics {
     console.log('(LIV)ConfigurationAnalytics::configure loaded put to LocalStorage');
     global[TAGGING_KEY] = dataJson;
     return dataJson;
-  }
+  } */
 
   loadConfigurationSync(updateAt) {
     console.log('(LIV)ConfigurationAnalytics::configure load from: ', TAGGING_URL);

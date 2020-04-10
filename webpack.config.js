@@ -6,6 +6,8 @@ module.exports = {
   output: {
     filename: 'liverpool-taggeo-lib.js',
     path: path.resolve(__dirname, 'dist'),
+    libraryTarget: 'var',
+    library: 'LiverpoolAnalytics',
   },
   module: {
     rules: [{
