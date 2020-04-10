@@ -9,9 +9,10 @@
  * @description: library for Liverpool Analytics Tagging
  * @since-version: 1.0
  */
+
 import ReactGA from 'react-ga';
 
-module.exports = class GoogleGA {
+export default class GoogleGACustom {
   // eslint-disable-next-line class-methods-use-this
   static init(key) {
     ReactGA.initialize(key);
@@ -26,4 +27,4 @@ module.exports = class GoogleGA {
   static setEvent(dataLayer) {
     ReactGA.event(dataLayer);
   }
-};
+}
