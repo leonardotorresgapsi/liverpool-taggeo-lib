@@ -42,6 +42,10 @@ module.exports = class ProviderAnalytics {
     this.logger.info('init waiting for async call:{}');
   }
 
+  getGoogleKey() {
+    return this.configurations.getGoogleKey();
+  }
+
   publish(dataLayer) {
     let liverpoolLayer = dataLayer;
     let stringJson = '';

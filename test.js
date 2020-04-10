@@ -13,7 +13,7 @@
 console.log('========================================================================================');
 console.log(' ');
 
-const AnalyticsTagging = require('./index.js');
+const AnalyticsTagging = require('./src');
 
 const API_KEY = 'bf6c0c4a-7693-4b1b-9f3f-c7d7cc3b38d2';
 const analyticsTagging = new AnalyticsTagging.Analytics(API_KEY);

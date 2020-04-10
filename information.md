@@ -1,4 +1,22 @@
-## Probando NPM
+#Instalando babel-cli global
+npm install -g babel-cli
+babel --version
+
+npm install --save-dev @babel/core @babel/cli
+npm install @babel/preset-env --save-dev
+npm run build
+# el resultado de esto me genera en el directorio lib en version babel
+
+## Instalando WebPack
+npm install webpack webpack-cli --save-dev
+
+npm install --save-dev @babel/register babel-loader
+npm install --save  @babel/polyfill
+
+# Me base aqui para utilizar webpack y babel
+https://www.thebasement.be/working-with-babel-7-and-webpack/
+# Generara en la directorio dist el bundle.js
+npm run dev
 
 **Procedimiento para probar la libreria antes de publicar**
 
