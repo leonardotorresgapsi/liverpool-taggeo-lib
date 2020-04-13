@@ -118,7 +118,8 @@ module.exports = class ConfigurationAnalytics {
               for (let index = 0; index < rta.providers[0].sites.length; index += 1) {
                 if (locationHref.indexOf(rta.providers[0].sites[index].name) > 0) {
                   result = rta.providers[0].sites[index].key;
-                  console.log('(LIV)ConfigurationAnalytics::getGoogleKey: Ubico Multisitio Key GTM');
+                  // eslint-disable-next-line max-len
+                  console.log('(LIV)ConfigurationAnalytics::getGoogleKey: Ubico Multisitio Key GTM', rta.providers[0].sites[index].name);
                   break;
                 }
               }

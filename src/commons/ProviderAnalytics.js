@@ -57,6 +57,13 @@ module.exports = class ProviderAnalytics {
     let liverpoolLayer = dataLayer;
     let stringJson = '';
     const eventNameSource = dataLayer.event;
+    console.log('eventNameSource:', eventNameSource);
+
+    if (eventNameSource === undefined) {
+      this.logger.info('publish without event so send dataLayer for default to Google!');
+      this.google.execute(liverpoolLayer);
+      return;
+    }
 
     if (global[TAGGING_KEY] === undefined) {
       this.logger.info('publish !Error, not exist data equivalences');
