@@ -113,12 +113,14 @@ module.exports = class ConfigurationAnalytics {
       if (rta.id === 1) {
         if (rta.providers != null) {
           if (rta.providers[0].sites != null) {
-            const locationHref = window.location.href;
-            for (let index = 0; index < rta.providers[0].sites.length; index += 1) {
-              if (locationHref.indexOf(rta.providers[0].sites[index].name) > 0) {
-                result = rta.providers[0].sites[index].key;
-                console.log('(LIV)ConfigurationAnalytics::getGoogleKey: Ubico Multisitio Key GTM');
-                break;
+            if (typeof window !== 'undefined' && window) {
+              const locationHref = window.location.href;
+              for (let index = 0; index < rta.providers[0].sites.length; index += 1) {
+                if (locationHref.indexOf(rta.providers[0].sites[index].name) > 0) {
+                  result = rta.providers[0].sites[index].key;
+                  console.log('(LIV)ConfigurationAnalytics::getGoogleKey: Ubico Multisitio Key GTM');
+                  break;
+                }
               }
             }
           }
