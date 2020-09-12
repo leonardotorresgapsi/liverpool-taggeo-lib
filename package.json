@@ -21,7 +21,7 @@
     "@babel/polyfill": "^7.8.7",
     "local-storage": "^2.0.0",
     "module": "^1.2.5",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "react": "^16.2.0",
     "react-ga": "^2.7.0",
     "react-gtm-module": "^2.0.8",
